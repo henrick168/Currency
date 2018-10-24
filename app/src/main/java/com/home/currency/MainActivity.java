@@ -1,5 +1,6 @@
 package com.home.currency;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,11 +35,16 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnGo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(edNTD.getText().toString().trim())) {
+                // reset textView
+                tvJP.setText(getString(R.string.text_none));
+                tvUS.setText(getString(R.string.text_none));
+
+                if (".".equals(edNTD.getText().toString()) ||
+                        TextUtils.isEmpty(edNTD.getText().toString().trim())) {
                     new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Problem")
-                            .setMessage("Please enter your NTD amount")
-                            .setPositiveButton("OK", null)
+                            .setTitle(R.string.text_problem)
+                            .setMessage(R.string.text_please_enter_ntd)
+                            .setPositiveButton(R.string.text_ok, null)
                             .show();
                 } else {
                     float resultJP = getResult(TYPE_JP);
@@ -46,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
                     tvJP.setText(String.valueOf(resultJP));
                     tvUS.setText(String.valueOf(resultUS));
                     new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Result")
-                            .setMessage("USD is " + resultUS)
-                            .setPositiveButton("OK", null)
+                            .setTitle(R.string.text_result)
+                            .setMessage(String.format("%s %.4f", getString(R.string.text_usd_is), resultUS))
+                            .setPositiveButton(R.string.text_ok, null)
                             .show();
                 }
             }
